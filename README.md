@@ -11,4 +11,4 @@ cd decodelabs-devops
 Navigate the app directory structure and review the web app setup logs.
 
 ## License
-MIT License. Copyright (c) 2026 [Your Name]
+MIT License. Copyright (c) 2026 David Onoja
