@@ -1,0 +1,52 @@
+name: DecodeLabs CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Stage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run build simulation
+        run: |
+          echo "--- STAGE 1: BUILD ---"
+          echo "Validating project structure..."
+          ls -R app/
+          echo "Build complete."
+
+  test:
+    name: Test Stage
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: |
+          echo "--- STAGE 2: TEST ---"
+          echo "Running integrity checks..."
+          test -f app/config.conf && echo "PASS: config.conf exists" || exit 1
+          test -d app/logs && echo "PASS: logs directory exists" || exit 1
+          echo "All tests passed."
+
+  deploy:
+    name: Deploy Stage
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Simulate deployment
+        run: |
+          echo "--- STAGE 3: DEPLOY ---"
+          echo "All quality gates passed."
+          echo "Deploying to production environment..."
+          echo "Deployment successful. App is live."
